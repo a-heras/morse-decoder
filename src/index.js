@@ -39,6 +39,56 @@ const MORSE_TABLE = {
 };
 */
 
-module.exports = function decode(/* expr */) {
-  throw new Error('Not implemented');
+module.exports = function decode(expr) {
+  const MORSE_TABLE = {
+    '.-': 'a',
+    '-...': 'b',
+    '-.-.': 'c',
+    '-..': 'd',
+    '.': 'e',
+    '..-.': 'f',
+    '--.': 'g',
+    '....': 'h',
+    '..': 'i',
+    '.---': 'j',
+    '-.-': 'k',
+    '.-..': 'l',
+    '--': 'm',
+    '-.': 'n',
+    '---': 'o',
+    '.--.': 'p',
+    '--.-': 'q',
+    '.-.': 'r',
+    '...': 's',
+    '-': 't',
+    '..-': 'u',
+    '...-': 'v',
+    '.--': 'w',
+    '-..-': 'x',
+    '-.--': 'y',
+    '--..': 'z',
+    '.----': '1',
+    '..---': '2',
+    '...--': '3',
+    '....-': '4',
+    '.....': '5',
+    '-....': '6',
+    '--...': '7',
+    '---..': '8',
+    '----.': '9',
+    '-----': '0',
+  };
+  return expr.match(/.{10}/g).reduce((acc, chunk) => {
+    if (chunk === '**********') return `${acc} `;
+    const morse = chunk
+      .match(/.{2}/g)
+      .map((p) => {
+        if (p === '10') return '.';
+        if (p === '11') return '-';
+        return '';
+      })
+      .join('');
+
+    return acc + MORSE_TABLE[morse];
+  }, '');
 };
